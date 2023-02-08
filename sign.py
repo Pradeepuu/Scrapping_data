@@ -1,23 +1,24 @@
 import time
+from select import select
 from typing import TextIO
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"}
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"}
 opts = Options()
-opts.headless = True
+opts.headless = False
 driver = webdriver.Chrome(r"/home/pradeep/Downloads/chromedriver_linux64/chromedriver")
+driver.maximize_window()
+driver.implicitly_wait(5)
+
 l = 0
 mylist = [
-    # 'https://signaling.fedsig.com/product/break-glass-call-point',
-    # 'https://signaling.fedsig.com/product/310-mv-audiomaster-two-way-intercom',
-    # 'https://signaling.fedsig.com/product/fire-alarm-pull-station',
-    # 'https://signaling.fedsig.com/product/300mb-commcenter',
 
-    # 'https://signaling.fedsig.com/product/telb-telcom-telephone-extension-ringer-device',
     # 'https://signaling.fedsig.com/product/121aled',
     # 'https://signaling.fedsig.com/product/slm300-slm350-streamline',
     # 'https://signaling.fedsig.com/product/explosion-proof-industrial-telephone',
@@ -26,6 +27,7 @@ mylist = [
     # 'https://signaling.fedsig.com/product/310-mv-mnc-audiomaster-two-way-intercom',
     # 'https://signaling.fedsig.com/product/fire-alarm-pull-station',
     # 'https://signaling.fedsig.com/product/121aled-n-nsf',
+    # 'https://signaling.fedsig.com/product/telb-telcom-telephone-extension-ringer-device',
     # 'https://signaling.fedsig.com/product/telc-telcom-telephone-extension-ringer-device',
     # 'https://signaling.fedsig.com/product/ps-series-push-button-station',
     # 'https://signaling.fedsig.com/product/121sled-n-nsf-certified-series-sanitation-rotating-led-warning-light',
@@ -554,160 +556,160 @@ mylist = [
     # 'https://signaling.fedsig.com/product/K8550320A-01',
     # 'https://signaling.fedsig.com/product/K8550320A-02',
     # 'https://signaling.fedsig.com/product/K8550320A-03',
-    # 'https://signaling.fedsig.com/product/K8550320A-04',
-    # 'https://signaling.fedsig.com/product/K8550320A-05',
-    # 'https://signaling.fedsig.com/product/K8550326A',
-    # 'https://signaling.fedsig.com/product/K8550333A',
-    # 'https://signaling.fedsig.com/product/K8550C095A',
-    # 'https://signaling.fedsig.com/product/K8550C095A-01',
-    # 'https://signaling.fedsig.com/product/K8550C095A-02',
-    # 'https://signaling.fedsig.com/product/K8550C095A-03',
-    # 'https://signaling.fedsig.com/product/K8550C095A-04',
-    # 'https://signaling.fedsig.com/product/K8550C095A-07',
-    # 'https://signaling.fedsig.com/product/K858900353A',
-    # 'https://signaling.fedsig.com/product/K8589037A',
-    # 'https://signaling.fedsig.com/product/K8589037A-01',
-    # 'https://signaling.fedsig.com/product/K8589037A-02',
-    # 'https://signaling.fedsig.com/product/K8589037A-03',
-    # 'https://signaling.fedsig.com/product/K8589037A-04',
-    # 'https://signaling.fedsig.com/product/K8589058A',
-    # 'https://signaling.fedsig.com/product/K8589063A',
-    # 'https://signaling.fedsig.com/product/K8589063A-01',
-    # 'https://signaling.fedsig.com/product/K8589063A-02',
-    # 'https://signaling.fedsig.com/product/K8589063A-03',
-    # 'https://signaling.fedsig.com/product/K8589063A-04',
-    # 'https://signaling.fedsig.com/product/K8590242A',
-    # 'https://signaling.fedsig.com/product/K8590246A-01',
-    # 'https://signaling.fedsig.com/product/K8590288A',
-    # 'https://signaling.fedsig.com/product/K8590298A',
-    # 'https://signaling.fedsig.com/product/K8591002A-03',
-    # 'https://signaling.fedsig.com/product/K859500809',
-    # 'https://signaling.fedsig.com/product/K859500814',
-    # 'https://signaling.fedsig.com/product/K859500814-01',
-    # 'https://signaling.fedsig.com/product/K859500814-02',
-    # 'https://signaling.fedsig.com/product/K859500814-03',
-    # 'https://signaling.fedsig.com/product/K859500814-04',
-    # 'https://signaling.fedsig.com/product/K859500814-05',
-    # 'https://signaling.fedsig.com/product/K859500814-06',
-    # 'https://signaling.fedsig.com/product/K859500815',
-    # 'https://signaling.fedsig.com/product/K859500815-01',
-    # 'https://signaling.fedsig.com/product/K859500815-02',
-    # 'https://signaling.fedsig.com/product/K859500815-03',
-    # 'https://signaling.fedsig.com/product/K859500815-04',
-    # 'https://signaling.fedsig.com/product/K859500815-05',
-    # 'https://signaling.fedsig.com/product/K859500815-06',
-    # 'https://signaling.fedsig.com/product/K859500821-01',
-    # 'https://signaling.fedsig.com/product/K859500821-02',
-    # 'https://signaling.fedsig.com/product/K859501178',
-    # 'https://signaling.fedsig.com/product/K859501180',
-    # 'https://signaling.fedsig.com/product/K859501227',
-    # 'https://signaling.fedsig.com/product/K859501400-A',
-    # 'https://signaling.fedsig.com/product/K859501400-B',
-    # 'https://signaling.fedsig.com/product/K859501400-G',
-    # 'https://signaling.fedsig.com/product/K859501400-R',
-    # 'https://signaling.fedsig.com/product/K859501400-W',
-    # 'https://signaling.fedsig.com/product/K859501401-A',
-    # 'https://signaling.fedsig.com/product/K859501401-B',
-    # 'https://signaling.fedsig.com/product/K859501401-G',
-    # 'https://signaling.fedsig.com/product/K859501401-R',
-    # 'https://signaling.fedsig.com/product/K859501401-W',
-    # 'https://signaling.fedsig.com/product/K859501402-024',
-    # 'https://signaling.fedsig.com/product/K859501402-120',
-    # 'https://signaling.fedsig.com/product/K859501402-230',
-    # 'https://signaling.fedsig.com/product/K8595116A-AA',
-    # 'https://signaling.fedsig.com/product/K8595116A-CA',
-    # 'https://signaling.fedsig.com/product/K8595116A-LB',
-    # 'https://signaling.fedsig.com/product/K8595116A-LG',
-    # 'https://signaling.fedsig.com/product/K8595116A-RA',
-    # 'https://signaling.fedsig.com/product/K8595116A-YA',
-    # 'https://signaling.fedsig.com/product/K8595177A',
-    # 'https://signaling.fedsig.com/product/K8597129A',
-    # 'https://signaling.fedsig.com/product/K8597134A',
-    # 'https://signaling.fedsig.com/product/K8597206A',
-    # 'https://signaling.fedsig.com/product/K14702196A',
-    # 'https://signaling.fedsig.com/product/pm22l-rgb',
-    # 'https://signaling.fedsig.com/product/commercial-vehicle-backup-alarm-IS-210239-S',
-    # 'https://signaling.fedsig.com/product/Z865300732',
-    # 'https://signaling.fedsig.com/product/300B-TALL',
-    # 'https://signaling.fedsig.com/product/radiant-steady-light-module',
-    # 'https://signaling.fedsig.com/product/IPX-PBL1',
-    # 'https://signaling.fedsig.com/product/K8449090C',
-    # 'https://signaling.fedsig.com/product/pm22c-rgb',
-    # 'https://signaling.fedsig.com/product/Z1751531A',
-    # 'https://signaling.fedsig.com/product/pm22l',
-    # 'https://signaling.fedsig.com/product/pm22a',
-    # 'https://signaling.fedsig.com/product/pm22c',
-    # 'https://signaling.fedsig.com/product/200775-95',
-    # 'https://signaling.fedsig.com/product/radiant-multi-pattern-light-module',
-    # 'https://signaling.fedsig.com/product/G-KIT-15WINSERT',
-    # 'https://signaling.fedsig.com/product/radiant-sound-module',
-    # 'https://signaling.fedsig.com/product/radiant-wiring-modules',
-    # 'https://signaling.fedsig.com/product/K8444277A',
-    # 'https://signaling.fedsig.com/product/AV-CK',
-    # 'https://signaling.fedsig.com/product/K8444277A-01',
-    # 'https://signaling.fedsig.com/product/K8444277A-02',
-    # 'https://signaling.fedsig.com/product/K8444277A-03',
-    # 'https://signaling.fedsig.com/product/K8444277A-04',
-    # 'https://signaling.fedsig.com/product/msl-led',
-    # 'https://signaling.fedsig.com/product/2000-series-xen1-xen4',
-    # 'https://signaling.fedsig.com/product/atkinson-dynamics-non-amplified-speaker',
-    # 'https://signaling.fedsig.com/product/K101216A',
-    # 'https://signaling.fedsig.com/product/224xst-electraray',
-    # 'https://signaling.fedsig.com/product/300x-selectone',
-    # 'https://signaling.fedsig.com/product/224xsthi-electraray',
-    # 'https://signaling.fedsig.com/product/302gc-selectone',
-    # 'https://signaling.fedsig.com/product/K122339A',
-    # 'https://signaling.fedsig.com/product/K122A298A',
-    # 'https://signaling.fedsig.com/product/302gcx-cn-selectone',
-    # 'https://signaling.fedsig.com/product/225-rotating-light',
-    # 'https://signaling.fedsig.com/product/K131220A',
-    # 'https://signaling.fedsig.com/product/225x-electraray-rotating-light',
-    # 'https://signaling.fedsig.com/product/302gcx-selectone',
-    # 'https://signaling.fedsig.com/product/K137144A',
-    # 'https://signaling.fedsig.com/product/225xl-electraray-led',
-    # 'https://signaling.fedsig.com/product/302x-selectone',
-    # 'https://signaling.fedsig.com/product/K140A326A-01',
-    # 'https://signaling.fedsig.com/product/225xl-n-nsf-series',
-    # 'https://signaling.fedsig.com/product/304gc-314gc',
-    # 'https://signaling.fedsig.com/product/304gcx-314gcx',
-    # 'https://signaling.fedsig.com/product/K141133A',
-    # 'https://signaling.fedsig.com/product/225xst-i',
-    # 'https://signaling.fedsig.com/product/g-led-global-series',
-    # 'https://signaling.fedsig.com/product/g-msc-custom-global-series',
-    # 'https://signaling.fedsig.com/product/g-msc-global-series',
-    # 'https://signaling.fedsig.com/product/g-str-global-series',
-    # 'https://signaling.fedsig.com/product/usi-status-indicator',
-    # 'https://signaling.fedsig.com/product/usix-hazardous-status-indicator',
-    # 'https://signaling.fedsig.com/product/radiant-mounting-options',
-    # 'https://signaling.fedsig.com/product/radiant-steady-bright-light-module',
-    # 'https://signaling.fedsig.com/product/fb2led-fireball-led',
-    # 'https://signaling.fedsig.com/product/fb2ledx-fireball',
-    # 'https://signaling.fedsig.com/product/vlbl',
-    # 'https://signaling.fedsig.com/product/fb24st-fireball-strobe',
-    # 'https://signaling.fedsig.com/product/fb24sthi-fireball-supervised-strobe-light',
-    # 'https://signaling.fedsig.com/product/fb2pst-fireball',
-    # 'https://signaling.fedsig.com/product/fb2pst-i-fireball',
-    # 'https://signaling.fedsig.com/product/fsex',
-    # 'https://signaling.fedsig.com/product/fsex-hi',
-    # 'https://signaling.fedsig.com/product/DBLP',
-    # 'https://signaling.fedsig.com/product/DGXC-SB',
-    # 'https://signaling.fedsig.com/product/FB2G',
-    # 'https://signaling.fedsig.com/product/ehorn',
-    # 'https://signaling.fedsig.com/product/ehorn-hv',
-    # 'https://signaling.fedsig.com/product/ashh-asuh',
-    # 'https://signaling.fedsig.com/product/ashp-asup',
-    # 'https://signaling.fedsig.com/product/ashx-asux',
-    # 'https://signaling.fedsig.com/product/em3-selectone-extension-module',
-    # 'https://signaling.fedsig.com/product/cts2-amplifiers',
-    # 'https://signaling.fedsig.com/product/audiomaster-public-address-speaker-am30',
-    # 'https://signaling.fedsig.com/product/am300-am302',
-    # 'https://signaling.fedsig.com/product/am300gcx-am302gcx',
-    # 'https://signaling.fedsig.com/product/am300x-am302x',
-    # 'https://signaling.fedsig.com/product/audiomaster-public-address-transformer-am30t',
-    # 'https://signaling.fedsig.com/product/am50-audiomaster',
-    # 'https://signaling.fedsig.com/product/amr6-audiomaster',
-    # 'https://signaling.fedsig.com/product/K288697A',
-    # 'https://signaling.fedsig.com/product/K288696A',
+    'https://signaling.fedsig.com/product/K8550320A-04',
+    'https://signaling.fedsig.com/product/K8550320A-05',
+    'https://signaling.fedsig.com/product/K8550326A',
+    'https://signaling.fedsig.com/product/K8550333A',
+    'https://signaling.fedsig.com/product/K8550C095A',
+    'https://signaling.fedsig.com/product/K8550C095A-01',
+    'https://signaling.fedsig.com/product/K8550C095A-02',
+    'https://signaling.fedsig.com/product/K8550C095A-03',
+    'https://signaling.fedsig.com/product/K8550C095A-04',
+    'https://signaling.fedsig.com/product/K8550C095A-07',
+    'https://signaling.fedsig.com/product/K858900353A',
+    'https://signaling.fedsig.com/product/K8589037A',
+    'https://signaling.fedsig.com/product/K8589037A-01',
+    'https://signaling.fedsig.com/product/K8589037A-02',
+    'https://signaling.fedsig.com/product/K8589037A-03',
+    'https://signaling.fedsig.com/product/K8589037A-04',
+    'https://signaling.fedsig.com/product/K8589058A',
+    'https://signaling.fedsig.com/product/K8589063A',
+    'https://signaling.fedsig.com/product/K8589063A-01',
+    'https://signaling.fedsig.com/product/K8589063A-02',
+    'https://signaling.fedsig.com/product/K8589063A-03',
+    'https://signaling.fedsig.com/product/K8589063A-04',
+    'https://signaling.fedsig.com/product/K8590242A',
+    'https://signaling.fedsig.com/product/K8590246A-01',
+    'https://signaling.fedsig.com/product/K8590288A',
+    'https://signaling.fedsig.com/product/K8590298A',
+    'https://signaling.fedsig.com/product/K8591002A-03',
+    'https://signaling.fedsig.com/product/K859500809',
+    'https://signaling.fedsig.com/product/K859500814',
+    'https://signaling.fedsig.com/product/K859500814-01',
+    'https://signaling.fedsig.com/product/K859500814-02',
+    'https://signaling.fedsig.com/product/K859500814-03',
+    'https://signaling.fedsig.com/product/K859500814-04',
+    'https://signaling.fedsig.com/product/K859500814-05',
+    'https://signaling.fedsig.com/product/K859500814-06',
+    'https://signaling.fedsig.com/product/K859500815',
+    'https://signaling.fedsig.com/product/K859500815-01',
+    'https://signaling.fedsig.com/product/K859500815-02',
+    'https://signaling.fedsig.com/product/K859500815-03',
+    'https://signaling.fedsig.com/product/K859500815-04',
+    'https://signaling.fedsig.com/product/K859500815-05',
+    'https://signaling.fedsig.com/product/K859500815-06',
+    'https://signaling.fedsig.com/product/K859500821-01',
+    'https://signaling.fedsig.com/product/K859500821-02',
+    'https://signaling.fedsig.com/product/K859501178',
+    'https://signaling.fedsig.com/product/K859501180',
+    'https://signaling.fedsig.com/product/K859501227',
+    'https://signaling.fedsig.com/product/K859501400-A',
+    'https://signaling.fedsig.com/product/K859501400-B',
+    'https://signaling.fedsig.com/product/K859501400-G',
+    'https://signaling.fedsig.com/product/K859501400-R',
+    'https://signaling.fedsig.com/product/K859501400-W',
+    'https://signaling.fedsig.com/product/K859501401-A',
+    'https://signaling.fedsig.com/product/K859501401-B',
+    'https://signaling.fedsig.com/product/K859501401-G',
+    'https://signaling.fedsig.com/product/K859501401-R',
+    'https://signaling.fedsig.com/product/K859501401-W',
+    'https://signaling.fedsig.com/product/K859501402-024',
+    'https://signaling.fedsig.com/product/K859501402-120',
+    'https://signaling.fedsig.com/product/K859501402-230',
+    'https://signaling.fedsig.com/product/K8595116A-AA',
+    'https://signaling.fedsig.com/product/K8595116A-CA',
+    'https://signaling.fedsig.com/product/K8595116A-LB',
+    'https://signaling.fedsig.com/product/K8595116A-LG',
+    'https://signaling.fedsig.com/product/K8595116A-RA',
+    'https://signaling.fedsig.com/product/K8595116A-YA',
+    'https://signaling.fedsig.com/product/K8595177A',
+    'https://signaling.fedsig.com/product/K8597129A',
+    'https://signaling.fedsig.com/product/K8597134A',
+    'https://signaling.fedsig.com/product/K8597206A',
+    'https://signaling.fedsig.com/product/K14702196A',
+    'https://signaling.fedsig.com/product/pm22l-rgb',
+    'https://signaling.fedsig.com/product/commercial-vehicle-backup-alarm-IS-210239-S',
+    'https://signaling.fedsig.com/product/Z865300732',
+    'https://signaling.fedsig.com/product/300B-TALL',
+    'https://signaling.fedsig.com/product/radiant-steady-light-module',
+    'https://signaling.fedsig.com/product/IPX-PBL1',
+    'https://signaling.fedsig.com/product/K8449090C',
+    'https://signaling.fedsig.com/product/pm22c-rgb',
+    'https://signaling.fedsig.com/product/Z1751531A',
+    'https://signaling.fedsig.com/product/pm22l',
+    'https://signaling.fedsig.com/product/pm22a',
+    'https://signaling.fedsig.com/product/pm22c',
+    'https://signaling.fedsig.com/product/200775-95',
+    'https://signaling.fedsig.com/product/radiant-multi-pattern-light-module',
+    'https://signaling.fedsig.com/product/G-KIT-15WINSERT',
+    'https://signaling.fedsig.com/product/radiant-sound-module',
+    'https://signaling.fedsig.com/product/radiant-wiring-modules',
+    'https://signaling.fedsig.com/product/K8444277A',
+    'https://signaling.fedsig.com/product/AV-CK',
+    'https://signaling.fedsig.com/product/K8444277A-01',
+    'https://signaling.fedsig.com/product/K8444277A-02',
+    'https://signaling.fedsig.com/product/K8444277A-03',
+    'https://signaling.fedsig.com/product/K8444277A-04',
+    'https://signaling.fedsig.com/product/msl-led',
+    'https://signaling.fedsig.com/product/2000-series-xen1-xen4',
+    'https://signaling.fedsig.com/product/atkinson-dynamics-non-amplified-speaker',
+    'https://signaling.fedsig.com/product/K101216A',
+    'https://signaling.fedsig.com/product/224xst-electraray',
+    'https://signaling.fedsig.com/product/300x-selectone',
+    'https://signaling.fedsig.com/product/224xsthi-electraray',
+    'https://signaling.fedsig.com/product/302gc-selectone',
+    'https://signaling.fedsig.com/product/K122339A',
+    'https://signaling.fedsig.com/product/K122A298A',
+    'https://signaling.fedsig.com/product/302gcx-cn-selectone',
+    'https://signaling.fedsig.com/product/225-rotating-light',
+    'https://signaling.fedsig.com/product/K131220A',
+    'https://signaling.fedsig.com/product/225x-electraray-rotating-light',
+    'https://signaling.fedsig.com/product/302gcx-selectone',
+    'https://signaling.fedsig.com/product/K137144A',
+    'https://signaling.fedsig.com/product/225xl-electraray-led',
+    'https://signaling.fedsig.com/product/302x-selectone',
+    'https://signaling.fedsig.com/product/K140A326A-01',
+    'https://signaling.fedsig.com/product/225xl-n-nsf-series',
+    'https://signaling.fedsig.com/product/304gc-314gc',
+    'https://signaling.fedsig.com/product/304gcx-314gcx',
+    'https://signaling.fedsig.com/product/K141133A',
+    'https://signaling.fedsig.com/product/225xst-i',
+    'https://signaling.fedsig.com/product/g-led-global-series',
+    'https://signaling.fedsig.com/product/g-msc-custom-global-series',
+    'https://signaling.fedsig.com/product/g-msc-global-series',
+    'https://signaling.fedsig.com/product/g-str-global-series',
+    'https://signaling.fedsig.com/product/usi-status-indicator',
+    'https://signaling.fedsig.com/product/usix-hazardous-status-indicator',
+    'https://signaling.fedsig.com/product/radiant-mounting-options',
+    'https://signaling.fedsig.com/product/radiant-steady-bright-light-module',
+    'https://signaling.fedsig.com/product/fb2led-fireball-led',
+    'https://signaling.fedsig.com/product/fb2ledx-fireball',
+    'https://signaling.fedsig.com/product/vlbl',
+    'https://signaling.fedsig.com/product/fb24st-fireball-strobe',
+    'https://signaling.fedsig.com/product/fb24sthi-fireball-supervised-strobe-light',
+    'https://signaling.fedsig.com/product/fb2pst-fireball',
+    'https://signaling.fedsig.com/product/fb2pst-i-fireball',
+    'https://signaling.fedsig.com/product/fsex',
+    'https://signaling.fedsig.com/product/fsex-hi',
+    'https://signaling.fedsig.com/product/DBLP',
+    'https://signaling.fedsig.com/product/DGXC-SB',
+    'https://signaling.fedsig.com/product/FB2G',
+    'https://signaling.fedsig.com/product/ehorn',
+    'https://signaling.fedsig.com/product/ehorn-hv',
+    'https://signaling.fedsig.com/product/ashh-asuh',
+    'https://signaling.fedsig.com/product/ashp-asup',
+    'https://signaling.fedsig.com/product/ashx-asux',
+    'https://signaling.fedsig.com/product/em3-selectone-extension-module',
+    'https://signaling.fedsig.com/product/cts2-amplifiers',
+    'https://signaling.fedsig.com/product/audiomaster-public-address-speaker-am30',
+    'https://signaling.fedsig.com/product/am300-am302',
+    'https://signaling.fedsig.com/product/am300gcx-am302gcx',
+    'https://signaling.fedsig.com/product/am300x-am302x',
+    'https://signaling.fedsig.com/product/audiomaster-public-address-transformer-am30t',
+    'https://signaling.fedsig.com/product/am50-audiomaster',
+    'https://signaling.fedsig.com/product/amr6-audiomaster',
+    'https://signaling.fedsig.com/product/K288697A',
+    'https://signaling.fedsig.com/product/K288696A',
     'https://signaling.fedsig.com/product/K8590013B',
     'https://signaling.fedsig.com/product/K8590013B-01',
     'https://signaling.fedsig.com/product/K8590236A',
@@ -719,87 +721,182 @@ mylist = [
     'https://signaling.fedsig.com/product/SLMNPT2',
     'https://signaling.fedsig.com/product/SLM-RR',
     'https://signaling.fedsig.com/product/SSM',
-            ]
+
+]
 for url in mylist:
+    l = l + 1
+    driver.get(url)
+    driver.get(driver.current_url)
+    time.sleep(12)
+    print("Products Urls", l, url)
+
+    title_d = ''
+    sku_d = ''
+    Description_d = ''
+    feature_d = ''
+    price_d = ''
+    pdf_d = ''
+    option_d = ''
+    # =================================================== Find breadcrumb =============================================
+    Breadcrumb_d = []
+    print("*********************************** Breadcrumb : **************************************")
+    Breadcrumb = driver.find_elements(By.ID, 'breadcrumbElement')
+    for x in Breadcrumb:
+        Breadcrumb_d.append(x.text)
+    print("Breadcrumb = ", Breadcrumb_d)
     try:
-        l = l + 1
-        driver.get(driver.current_url)
-        time.sleep(3)
-        print("Products Urls", l, url)
-        driver.get(url)
-        time.sleep(6)
-        m = ''
-        n = ''
-        try:
-            print("************************************* table section 1 : ****************************************")
-            attr_n = []
-            attr_v = []
-            table = driver.find_elements(By.XPATH, "//div[@id='region-re2200001']")
-            i = 0
-            for x in table:
-                # print(i)
-                # print(x.text)
-                td = x.find_elements(By.TAG_NAME, 'td')
-                for g in td:
-                    i = i + 1
-                    if i % 2 == 0:
-                        attr_v.append(g.text)
-                    else:
-                        attr_n.append(g.text)
-            # print(attr_n)
-            # print(attr_v)
-            for m, n in zip(attr_n, attr_v):
-                print(m, " = Table Section 1 = ", n)
-                save_details: TextIO = open("signal_tables.xlsx", "a+", encoding="utf-8")
-                save_details.write("\n" + url + "\t" + m + "\t" + n)
+        # ================================================ find title =====================================================
+        print("***********************************  Title : **************************************")
+        title = driver.find_element(By.CLASS_NAME, 'visible-lg')
+        title_d = title.text
+        print("title = ", title_d)
+    except:
+        print("Not Found")
+
+    try:
+        print('*********************** First Options *************************')
+        all_options = driver.find_element(By.ID, 'wi700851-fs-product-variants-id').find_elements(By.TAG_NAME, 'option')
+        op = []
+        for o in all_options:
+            # print("options = ", o.text)
+            if "..." not in o.text:
+                op.append(o.text)
+        # print(op)
+        dropdown = Select(driver.find_element(By.CLASS_NAME, 'cc-skuDropdown'))
+        input1 = len(dropdown.options)
+        # print("inputs = ", input1)
+
+        for option, item in zip(op, range(1, input1)):
+            time.sleep(3)
+            dropdown = Select(driver.find_element(By.CLASS_NAME, 'cc-skuDropdown'))
+            print("first loop = ", item)
+            dropdown.select_by_index(item)
+            option_d = option
+            print("options = ", option_d)
+            time.sleep(3)
+
+            try:
+                print("************************************* Price : ****************************************")
+                price = driver.find_element(By.ID, 'wi700851-fs-product-list-price-id')
+                price_d = price.text
+                print("Price = ", price_d)
+            except:
+                price_d = "Not Found"
+                print("Not Found Price")
+            try:
+                print("************************************* sku : ****************************************")
+                sku = driver.find_element(By.CLASS_NAME, 'cc-sku')
+                sku_d = sku.text
+                print("sku = ", sku_d)
+                save_details: TextIO = open("main_files.xlsx", "a+", encoding="utf-8")
+                save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + option_d + "\t" + price_d + "\t" + sku_d)
                 print("End")
                 save_details.close()
-                print("\n ***** Record stored into federal signal tables  files. *****")
-        except:
-            print("Not Found")
-            pass
-        # print("************************************* Table Section 2 : ****************************************")
-        # lists = []
-        # lists1 = []
-        # table2 = driver.find_elements(By.XPATH, "//div[@id='sku-specification-table_wrapper']")#.find_elements(by=By.TAG_NAME, value='tr')
-        # for th in table2:
-        #     th1 = th.find_elements(By.TAG_NAME, 'th')
-        #     for t in th1:
-        #         lists.append(t.text)
-        #     td1 = th.find_elements(By.TAG_NAME, 'td')
-        #     for t in td1:
-        #         lists1.append(t.text)
-        # for o, p in zip(lists, lists1):
-        #     print(o, "= Table section 2 = ", p)
-            # save_details: TextIO = open("signal_tables1.xlsx", "a+", encoding="utf-8")
-            # save_details.write("\n" + url + "\t" + o + "\t" + p)
-            # print("End")
-            # save_details.close()
-            # print("\n ***** Record stored into federal signal  files. *****")
+            except:
+                print("Not Found SKU")
+        #  =====================================================================================================================
+        #     try:
+        #         print('*********************** Second Options ************************')
+        #         second = Select(driver.find_element(By.XPATH, '//*[@id="CC-prodDetails-sku-VisualSignals_x_lensStyleVariant"]'))
+        #         input2 = len(second.options)
+        #         time.sleep(3)
+        #         for item2 in range(1, input2):
+        #             second = Select(driver.find_element(By.XPATH, '//*[@id="CC-prodDetails-sku-VisualSignals_x_lensStyleVariant"]'))
+        #             print("second loop = ", item2)
+        #             second.select_by_index(item2)        #
+        #             time.sleep(3)
+        #             driver.get(driver.current_url)
+        #             time.sleep(3)
+        #
+        #             try:
+        #                 print("************************************* Price : ****************************************")
+        #                 price = driver.find_element(By.ID, 'wi700851-fs-product-list-price-id')
+        #                 price_d = price.text
+        #                 print("Price = ", price_d)
+        #             except:
+        #                 price_d = "Not Found"
+        #                 print("Not Found Price")
+        #             try:
+        #                 print("************************************* sku : ****************************************")
+        #                 sku = driver.find_element(By.CLASS_NAME, 'cc-sku')
+        #                 sku_d = sku.text
+        #                 print("sku = ", sku_d)
+        #
+        #                 # save_details: TextIO = open("main_files.xlsx", "a+", encoding="utf-8")
+        #                 # save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + price_d + "\t" + sku_d)
+        #                 # print("End")
+        #                 # save_details.close()
+        #                 # print("\n ***** Record stored into federal signal  files. *****")
+        #             except:
+        #                 print("Not Found SKU")
+        #     except:
+        #             print("Second Options is Not Found")
 
-        # =====================================================================================================================
+    except:
+        print("Not Found For Loop data")
+        # print(e)
+    # =================================================================================================================
+    try:
+        print("************************************* Price : ****************************************")
+        price = driver.find_element(By.ID, 'wi700851-fs-product-list-price-id')
+        price_d = price.text
+        print("Price = ", price_d)
+    except:
+        price_d = "Not Found"
+        print("Not Found Price")
 
-        try:
-            print("************************************* Table UPC : ****************************************")
-            data = []
-            table = driver.find_element(by=By.ID, value='sku-specification-table')
-            td = table.find_elements(by=By.TAG_NAME, value='td')
-            for dd in td:
-                data.append(dd.text)
-                for x in data:
-                    upc_length = len(x)
-                    if upc_length == 12:
-                        upc = x
-                        print("upc = ", upc)
-                        save_details: TextIO = open("signal_tables.xlsx", "a+", encoding="utf-8")
-                        save_details.write("\n" + url + "\t" + m + "\t" + n + "\t" + "rp_"+upc)
-                        print("End")
-                        save_details.close()
-                        print("\n ***** Record stored into federal signal upc  files. *****")
-        except:
-            print("Not Found")
+    try:
+        print("************************************* sku : ****************************************")
+        sku = driver.find_element(By.CLASS_NAME, 'cc-sku')
+        sku_d = sku.text
+        print("sku = ", sku_d)
+    except:
+        print("Not Found SKU")
 
-    except Exception as e:
-        print(e)
+    try:
+        print("************************************* Description : ****************************************")
+        Description = driver.find_element(By.ID, 'wi700851-fs-product-long-description-id')
+        Description_d = Description.text.replace('\n', '')
+        print("Description = ", Description_d)
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* Feature : ****************************************")
+        feature = driver.find_element(By.ID, 'Features')
+        feature_d = feature.text.replace('\n', '')
+        print("feature = ", feature_d)
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* pdf : ****************************************")
+        pdf = driver.find_elements(By.CLASS_NAME, 'link-design ')
+        for d in pdf:
+            pdf_d = d.get_attribute('href')
+            print("Pdf = ", pdf_d)
+
+            save_details: TextIO = open("main_files.xlsx", "a+", encoding="utf-8")
+            save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + option_d + "\t" + price_d + "\t" + sku_d + "\t" + Description_d + "\t" + feature_d + "\t" + pdf_d)
+            print("End")
+            save_details.close()
+            print("\n ***** Record stored into pdf  files. *****")
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* Images : ****************************************")
+        image = driver.find_element(By.ID, 'cc_img__resize_wrapper').find_elements(By.TAG_NAME, 'img')
+        for imgs in image:
+            image_d = imgs.get_attribute('src')
+            print("image_d = ", image_d)
+
+            save_details: TextIO = open("main_files.xlsx", "a+", encoding="utf-8")
+            save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + option_d + "\t" + price_d + "\t" + sku_d + "\t" + Description_d + "\t" + feature_d + "\t" + pdf_d + "\t" + image_d)
+            print("End")
+            save_details.close()
+            print("\n ***** Record stored into Images  files. *****")
+    except:
+        print("Not Found")
 
 

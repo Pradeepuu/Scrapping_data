@@ -8,17 +8,14 @@ from selenium.webdriver.common.by import By
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"}
 opts = Options()
-opts.headless = True
+opts.headless = False
 driver = webdriver.Chrome(r"/home/pradeep/Downloads/chromedriver_linux64/chromedriver")
-l = 0
-mylist = [
-    # 'https://signaling.fedsig.com/product/break-glass-call-point',
-    # 'https://signaling.fedsig.com/product/310-mv-audiomaster-two-way-intercom',
-    # 'https://signaling.fedsig.com/product/fire-alarm-pull-station',
-    # 'https://signaling.fedsig.com/product/300mb-commcenter',
+driver.maximize_window()
+driver.implicitly_wait(5)
 
-    # 'https://signaling.fedsig.com/product/telb-telcom-telephone-extension-ringer-device',
-    # 'https://signaling.fedsig.com/product/121aled',
+l = 0
+url_list = [
+    'https://signaling.fedsig.com/product/121aled',
     # 'https://signaling.fedsig.com/product/slm300-slm350-streamline',
     # 'https://signaling.fedsig.com/product/explosion-proof-industrial-telephone',
     # 'https://signaling.fedsig.com/product/break-glass-call-point',
@@ -26,6 +23,7 @@ mylist = [
     # 'https://signaling.fedsig.com/product/310-mv-mnc-audiomaster-two-way-intercom',
     # 'https://signaling.fedsig.com/product/fire-alarm-pull-station',
     # 'https://signaling.fedsig.com/product/121aled-n-nsf',
+    # 'https://signaling.fedsig.com/product/telb-telcom-telephone-extension-ringer-device',
     # 'https://signaling.fedsig.com/product/telc-telcom-telephone-extension-ringer-device',
     # 'https://signaling.fedsig.com/product/ps-series-push-button-station',
     # 'https://signaling.fedsig.com/product/121sled-n-nsf-certified-series-sanitation-rotating-led-warning-light',
@@ -708,98 +706,111 @@ mylist = [
     # 'https://signaling.fedsig.com/product/amr6-audiomaster',
     # 'https://signaling.fedsig.com/product/K288697A',
     # 'https://signaling.fedsig.com/product/K288696A',
-    'https://signaling.fedsig.com/product/K8590013B',
-    'https://signaling.fedsig.com/product/K8590013B-01',
-    'https://signaling.fedsig.com/product/K8590236A',
-    'https://signaling.fedsig.com/product/K8590237A',
-    'https://signaling.fedsig.com/product/K8590239B',
-    'https://signaling.fedsig.com/product/K8590241A',
-    'https://signaling.fedsig.com/product/K8590287A',
-    'https://signaling.fedsig.com/product/SLMNPT1',
-    'https://signaling.fedsig.com/product/SLMNPT2',
-    'https://signaling.fedsig.com/product/SLM-RR',
-    'https://signaling.fedsig.com/product/SSM',
-            ]
-for url in mylist:
+    # 'https://signaling.fedsig.com/product/K8590013B',
+    # 'https://signaling.fedsig.com/product/K8590013B-01',
+    # 'https://signaling.fedsig.com/product/K8590236A',
+    # 'https://signaling.fedsig.com/product/K8590237A',
+    # 'https://signaling.fedsig.com/product/K8590239B',
+    # 'https://signaling.fedsig.com/product/K8590241A',
+    # 'https://signaling.fedsig.com/product/K8590287A',
+    # 'https://signaling.fedsig.com/product/SLMNPT1',
+    # 'https://signaling.fedsig.com/product/SLMNPT2',
+    # 'https://signaling.fedsig.com/product/SLM-RR',
+    # 'https://signaling.fedsig.com/product/SSM',
+
+
+
+]
+for url in url_list:
+    l = l + 1
+    driver.get(url)
+    driver.get(driver.current_url)
+    # driver.implicitly_wait(10)
+    time.sleep(12)
+    print("Products Urls", l, url)
+
+    sku_d = ''
+    Description_d = ''
+    feature_d = ''
+    # =================================================== Find breadcrumb =============================================
+    Breadcrumb_d = []
+    print("*********************************** Breadcrumb : **************************************")
+    Breadcrumb = driver.find_elements(By.ID, 'breadcrumbElement')
+    for x in Breadcrumb:
+        Breadcrumb_d.append(x.text)
+    print("Breadcrumb = ", Breadcrumb_d)
+
+    # ================================================ find title =====================================================
     try:
-        l = l + 1
-        driver.get(driver.current_url)
-        time.sleep(3)
-        print("Products Urls", l, url)
-        driver.get(url)
-        time.sleep(6)
-        m = ''
-        n = ''
-        try:
-            print("************************************* table section 1 : ****************************************")
-            attr_n = []
-            attr_v = []
-            table = driver.find_elements(By.XPATH, "//div[@id='region-re2200001']")
-            i = 0
-            for x in table:
-                # print(i)
-                # print(x.text)
-                td = x.find_elements(By.TAG_NAME, 'td')
-                for g in td:
-                    i = i + 1
-                    if i % 2 == 0:
-                        attr_v.append(g.text)
-                    else:
-                        attr_n.append(g.text)
-            # print(attr_n)
-            # print(attr_v)
-            for m, n in zip(attr_n, attr_v):
-                print(m, " = Table Section 1 = ", n)
-                save_details: TextIO = open("signal_tables.xlsx", "a+", encoding="utf-8")
-                save_details.write("\n" + url + "\t" + m + "\t" + n)
-                print("End")
-                save_details.close()
-                print("\n ***** Record stored into federal signal tables  files. *****")
-        except:
-            print("Not Found")
-            pass
-        # print("************************************* Table Section 2 : ****************************************")
-        # lists = []
-        # lists1 = []
-        # table2 = driver.find_elements(By.XPATH, "//div[@id='sku-specification-table_wrapper']")#.find_elements(by=By.TAG_NAME, value='tr')
-        # for th in table2:
-        #     th1 = th.find_elements(By.TAG_NAME, 'th')
-        #     for t in th1:
-        #         lists.append(t.text)
-        #     td1 = th.find_elements(By.TAG_NAME, 'td')
-        #     for t in td1:
-        #         lists1.append(t.text)
-        # for o, p in zip(lists, lists1):
-        #     print(o, "= Table section 2 = ", p)
-            # save_details: TextIO = open("signal_tables1.xlsx", "a+", encoding="utf-8")
-            # save_details.write("\n" + url + "\t" + o + "\t" + p)
-            # print("End")
-            # save_details.close()
-            # print("\n ***** Record stored into federal signal  files. *****")
 
-        # =====================================================================================================================
+        print("***********************************  Title : **************************************")
+        title = driver.find_element(By.CLASS_NAME, 'visible-lg')
+        title_d = title.text
+        print("title = ", title_d)
+    except:
+        title_d = 'Not Found'
+        print("Not Found")
 
-        try:
-            print("************************************* Table UPC : ****************************************")
-            data = []
-            table = driver.find_element(by=By.ID, value='sku-specification-table')
-            td = table.find_elements(by=By.TAG_NAME, value='td')
-            for dd in td:
-                data.append(dd.text)
-                for x in data:
-                    upc_length = len(x)
-                    if upc_length == 12:
-                        upc = x
-                        print("upc = ", upc)
-                        save_details: TextIO = open("signal_tables.xlsx", "a+", encoding="utf-8")
-                        save_details.write("\n" + url + "\t" + m + "\t" + n + "\t" + "rp_"+upc)
-                        print("End")
-                        save_details.close()
-                        print("\n ***** Record stored into federal signal upc  files. *****")
-        except:
-            print("Not Found")
+    try:
+        print("************************************* Price : ****************************************")
+        price = driver.find_element(By.ID, 'wi700851-fs-product-list-price-id')
+        price_d = price.text
+        print("Price = ", price_d)
+    except:
+        price_d = "Not Found"
+        print("Not Found Price")
 
+    try:
+        print("************************************* sku : ****************************************")
+        sku = driver.find_element(By.CLASS_NAME, 'cc-sku')
+        sku_d = sku.text
+        print("sku = ", sku_d)
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* Description : ****************************************")
+        Description = driver.find_element(By.ID, 'wi700851-fs-product-long-description-id')
+        Description_d = Description.text.replace('\n', '')
+        print("Description = ", Description_d)
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* Feature : ****************************************")
+        feature = driver.find_element(By.ID, 'Features')
+        feature_d = feature.text.replace('\n', '')
+        print("feature = ", feature_d)
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* pdf : ****************************************")
+        pdf = driver.find_elements(By.CLASS_NAME, 'link-design ')
+        for d in pdf:
+            pdf_d = d.get_attribute('href')
+            print("Pdf = ", pdf_d)
+            save_details: TextIO = open("signal.xlsx", "a+", encoding="utf-8")
+            save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + sku_d + "\t" + Description_d + "\t" + "rp_" + feature_d + "\t" + pdf_d)
+            print("End")
+            save_details.close()
+            print("\n ***** Record stored into federal signal  files. *****")
+    except:
+        print("Not Found")
+
+    try:
+        print("************************************* Images : ****************************************")
+        image = driver.find_element(By.ID, 'cc_img__resize_wrapper').find_elements(By.TAG_NAME, 'img')
+        for y in image:
+            image_d = y.get_attribute('src')
+            print("image_d = ", image_d)
+            save_details: TextIO = open("signal.xlsx", "a+", encoding="utf-8")
+            save_details.write("\n" + url + "\t" + "".join(Breadcrumb_d) + "\t" + title_d + "\t" + sku_d + "\t" + Description_d + "\t" + "rp_" + feature_d + "\t" + pdf_d + "\t" + image_d)
+            print("End")
+            save_details.close()
+            print("\n ***** Record stored into federal signal  files. *****")
     except Exception as e:
         print(e)
 
+        pass
 
